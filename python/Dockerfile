@@ -1,5 +1,7 @@
 FROM python:latest
 
+RUN python -m pip install --upgrade pip
+
 WORKDIR /rman-python
 
 COPY ./requirements.txt .

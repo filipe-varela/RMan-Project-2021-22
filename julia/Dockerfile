@@ -1,5 +1,7 @@
 FROM julia:latest
 
+RUN julia -e 'using Pkg; Pkg.add("Symbolics");'
+
 WORKDIR /rman-julia
 
 COPY . .
