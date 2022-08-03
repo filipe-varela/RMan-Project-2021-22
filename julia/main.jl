@@ -13,7 +13,19 @@
  
 using Symbolics # to get symbolic variables in the workspace
 
-@variables a
+include("./dhc/table.jl")
+import .DHCModule
 
-println("Hello world!")
-println(substitute(a, (Dict(a => 0.0))))
+Robot, q = DHCModule.generating_robot_kinematic()
+
+println(Robot)
+println(q)
+
+# @variables t
+# @variables q1(t), q2(t), q3(t), q4(t), q5(t), q6(t), q7(t)
+
+# q = [q1, q2, q3, q4, q5, q6, q7]
+
+# println(q[1])
+# println("Hello world!")
+# println(substitute(a, (Dict(a => 0.0))))
