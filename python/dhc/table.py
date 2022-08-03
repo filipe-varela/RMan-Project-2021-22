@@ -1,4 +1,4 @@
-def generate_robot():
+def generate_robot_kinematics():
     """A generating function which creates the DHC table and
     the consecutive symbolic variables used. The matrix has
     as columns the following labels in this specific order:
@@ -26,4 +26,4 @@ def generate_robot():
     return Robot, q
 
 if __name__ == "__main__":
-    Robot, q = generate_robot()
+    Robot, q = generate_robot_kinematics()
