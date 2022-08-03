@@ -32,7 +32,7 @@ develop scripts for testing and, big surprise, a CI client.
 
 ## Current status
 1. Kinematics - *Part K*
-   - [ ] Robot's DHC table
+   - [X] Robot's DHC table
    - [ ] Direct Kinematics
    - [ ] Geometric Jacobian
    - [ ] *CLIK*
