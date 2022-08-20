@@ -1,7 +1,7 @@
 from sympy import *
 
 # d v a alpha o
-def dkin(Robot):
+def dkin(Robot: Matrix) -> Matrix:
     """The Direct Kinematics function in which
     outputs the matrix T by a given matrix with
     the columns being: d, v, a, alpha and offset.

@@ -2,8 +2,8 @@
 # computing
 
 from sympy import *
-from dhc.table import generate_robot
-from kinematic.dkin import dkin
+from dhc import generate_robot
+from kinematic import dkin
 
 def main():
     print("Hello World!")
