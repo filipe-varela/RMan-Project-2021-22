@@ -19,4 +19,5 @@ def dkin(Robot: Matrix) -> Matrix:
                         [                                0,                                                    0,                                                    0,                                1]])
     return nsimplify(T, tolerance=1e-10, rational=False)
 
-def geometric_jacobian(): pass
+def geometric_jacobian(): 
+    pass
