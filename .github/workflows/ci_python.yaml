@@ -24,7 +24,8 @@ jobs:
       run: cd python && tree .
 
     - name: Install the modules require
-      uses: py-actions/py-dependency-install@v3
+      run: tree .
+      # uses: py-actions/py-dependency-install@v3
     
     - name: Run unittests in kinematics
       run: python -m tests.test_kinematic
