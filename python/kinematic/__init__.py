@@ -18,3 +18,5 @@ def dkin(Robot: Matrix) -> Matrix:
                         [                                0,                                   sin(Robot[row, 3]),                                   cos(Robot[row, 3]),                    Robot[row, 0]],
                         [                                0,                                                    0,                                                    0,                                1]])
     return nsimplify(T, tolerance=1e-10, rational=False)
+
+def geometric_jacobian(): pass
