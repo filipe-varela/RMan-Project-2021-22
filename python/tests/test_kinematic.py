@@ -1,6 +1,6 @@
 from sympy import *
 import unittest
-from kinematic import dkin
+from kinematic import dkin, geometric_jacobian
 from dhc import generate_robot
 
 init_printing(use_unicode=True)
@@ -19,14 +19,16 @@ class TestKinematic(unittest.TestCase):
         return Robot, q, a
 
     def error_test_generating_kinematics_str(self, T_test: Matrix, T_real: Matrix) -> str:
+        index = 0
         for element_test, element_real in zip(T_test, T_real):
-            if element_real != element_test:
+            if simplify(element_real) != simplify(element_test):
                 return f"""
 
-Elements that were diferent:
+Elements that were diferent at index={index}:
 Test: {element_test}
 Real: {element_real}
 """
+            index += 1
 
     def test_direct_kinematics(self):
         Robot, q, a = self.table_test()
@@ -39,7 +41,30 @@ Real: {element_real}
             nsimplify(T_test - T_real) == zeros(4), 
             self.error_test_generating_kinematics_str(T_test, T_real)
         )
-
+    
+    def test_geometric_jacobian(self):
+        Robot, q, a = self.table_test()
+        J_test = geometric_jacobian(Robot, q=q)
+        J_real = simplify(
+            Matrix(
+                [                
+                    [-q[2]*sin(q[0])*sin(q[1])-a[1]*sin(q[0])*cos(q[1]),                                                                                 -cos(q[0])*(-q[2]*cos(q[1])+a[1]*sin(q[1])),   cos(q[0])*sin(q[1])],
+                    [ q[2]*cos(q[0])*sin(q[1])+a[1]*cos(q[0])*cos(q[1]),                                                                                   sin(q[0])*(q[2]*cos(q[1])-a[1]*sin(q[1])),   sin(q[0])*sin(q[1])],
+                    [                                                 0, sin(q[0])*(q[2]*sin(q[0])*sin(q[1])+a[1]*sin(q[0])*cos(q[1]))+cos(q[0])*(q[2]*cos(q[0])*sin(q[1])+a[1]*cos(q[0])*cos(q[1])),            -cos(q[1])],
+                    [                                                 0,                                                                                                                   sin(q[0]),                     0],
+                    [                                                 0,                                                                                                                  -cos(q[0]),                     0],
+                    [                                                 1,                                                                                                                          0,                      0]
+                ]
+            )
+        )
+        self.assertEqual(
+            J_real,
+            J_test,
+            self.error_test_generating_kinematics_str(
+                J_test,
+                J_real
+            )
+        )
     def initialize_kinematic_2(self):
         # Initialize variables
         Robot, q = generate_robot()
@@ -80,6 +105,6 @@ Real: {element_real}
                 R_real
             )
         )
-        
+
 if __name__ == "__main__": 
     unittest.main()
