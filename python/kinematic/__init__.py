@@ -4,7 +4,7 @@ from sympy import *
 def dkin(Robot: Matrix) -> Matrix:
     """The Direct Kinematics function in which
     outputs the matrix T by a given matrix with
-    the columns being: d, v, a, alpha and offset.
+    the columns being: [d, v, a, alpha, offset].
     Any column added will be ignored.
     
     Returns:

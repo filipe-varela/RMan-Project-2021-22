@@ -1,6 +1,7 @@
 from sympy import *
 import unittest
 from kinematic import dkin
+from dhc import generate_robot
 
 init_printing(use_unicode=True)
 
@@ -27,18 +28,58 @@ Test: {element_test}
 Real: {element_real}
 """
 
-    def test_generating_kinematics(self):
+    def test_direct_kinematics(self):
         Robot, q, a = self.table_test()
         T_test = dkin(Robot)
         T_real = Matrix([[cos(q[0])*cos(q[1]),  sin(q[0]), cos(q[0])*sin(q[1]), q[2]*cos(q[0])*sin(q[1]) + a[1]*cos(q[0])*cos(q[1])],
                          [sin(q[0])*cos(q[1]), -cos(q[0]), sin(q[0])*sin(q[1]), q[2]*sin(q[0])*sin(q[1]) + a[1]*sin(q[0])*cos(q[1])],
                          [          sin(q[1]),          0,          -cos(q[1]),                     a[1]*sin(q[1]) - q[2]*cos(q[1])],
                          [                  0,          0,                   0,                                                   1]])
-        
         self.assertTrue(
             nsimplify(T_test - T_real) == zeros(4), 
             self.error_test_generating_kinematics_str(T_test, T_real)
         )
 
+    def initialize_kinematic_2(self):
+        # Initialize variables
+        Robot, q = generate_robot()
+        T = dkin(Robot)
+        pe_real = Matrix([0,0,.213+.25+.26+.3385+.1385]).evalf(chop=1e-2)
+        R_real  = Matrix([[0, -1, 0],
+                          [1,  0, 0],
+                          [0,  0, 1]])
+        return q, T, pe_real, R_real
+
+    def test_kinematic_2_position(self):
+        from pprint import pprint
+        q, T, pe_real, _ = self.initialize_kinematic_2()
+        pe_test = Matrix(
+            T.evalf(subs=dict(zip(q, zeros(1,7))))
+             .evalf(chop=True)[:3,-1]
+        )
+        self.assertEqual(
+            pe_test.evalf(2),
+            pe_real.evalf(2), 
+            msg=self.error_test_generating_kinematics_str(
+                pe_test, 
+                pe_real
+            )
+        )
+
+    def test_kinematic_2_orientation(self):
+        q, T, _, R_real = self.initialize_kinematic_2()
+        R_test = Matrix(
+            T.evalf(subs=dict(zip(q, zeros(1,7))))
+             .evalf(chop=True)[:3,:3]
+        ).evalf(2,chop=True)
+        self.assertEqual(
+            R_test,
+            R_real,
+            self.error_test_generating_kinematics_str(
+                R_test,
+                R_real
+            )
+        )
+        
 if __name__ == "__main__": 
     unittest.main()
