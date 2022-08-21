@@ -37,8 +37,9 @@ Real: {element_real}
                          [sin(q[0])*cos(q[1]), -cos(q[0]), sin(q[0])*sin(q[1]), q[2]*sin(q[0])*sin(q[1]) + a[1]*sin(q[0])*cos(q[1])],
                          [          sin(q[1]),          0,          -cos(q[1]),                     a[1]*sin(q[1]) - q[2]*cos(q[1])],
                          [                  0,          0,                   0,                                                   1]])
-        self.assertTrue(
-            nsimplify(T_test - T_real) == zeros(4), 
+        self.assertEqual(
+            simplify(T_test - T_real),
+            zeros(4), 
             self.error_test_generating_kinematics_str(T_test, T_real)
         )
     
@@ -65,8 +66,8 @@ Real: {element_real}
                 J_real
             )
         )
+
     def initialize_kinematic_2(self):
-        # Initialize variables
         Robot, q = generate_robot()
         T = dkin(Robot)
         pe_real = Matrix([0,0,.213+.25+.26+.3385+.1385]).evalf(chop=1e-2)
@@ -76,7 +77,6 @@ Real: {element_real}
         return q, T, pe_real, R_real
 
     def test_kinematic_2_position(self):
-        from pprint import pprint
         q, T, pe_real, _ = self.initialize_kinematic_2()
         pe_test = Matrix(
             T.evalf(subs=dict(zip(q, zeros(1,7))))
