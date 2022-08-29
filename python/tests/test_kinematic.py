@@ -74,17 +74,17 @@ Real: {element_real}
         R_real  = Matrix([[0, -1, 0],
                           [1,  0, 0],
                           [0,  0, 1]])
-        return q, T, pe_real, R_real
+        return q, T, pe_real.evalf(2), R_real
 
     def test_kinematic_2_position(self):
         q, T, pe_real, _ = self.initialize_kinematic_2()
         pe_test = Matrix(
             T.evalf(subs=dict(zip(q, zeros(1,7))))
-             .evalf(chop=True)[:3,-1]
+             .evalf(2, chop=True)[:3,-1]
         )
         self.assertEqual(
-            pe_test.evalf(2),
-            pe_real.evalf(2), 
+            pe_test,
+            pe_real, 
             msg=self.error_test_generating_kinematics_str(
                 pe_test, 
                 pe_real
@@ -105,6 +105,12 @@ Real: {element_real}
                 R_real
             )
         )
+
+    def test_geometric_jacobian_3_validation(self): pass
+
+    def test_geometric_jacobian_3_singularities_arm(self): pass
+
+    def test_geometric_jacobian_3_singularities_wrist(self): pass
 
 if __name__ == "__main__": 
     unittest.main()
