@@ -1,4 +1,4 @@
-from . import dkin
+from rman.kinematics.direct import dkin
 import sympy as sp
 import symengine as se
 

@@ -1,16 +1,4 @@
-def generate_robot(kinematic=True):
-    """A main function in which makes the generating of the 
-    robot more easier, in which by passing a boolean gives 
-    gives you the Robot matrix that you desired.
-    
-    Returns:
-        Robot: the matrix with the kinematics properties if 
-        true or the dynamics one if false.
-    """
-    if kinematic:
-        return generate_robot_kinematics()
-
-def generate_robot_kinematics():
+def robot_kinematics():
     """A generating function which creates the DHC table and
     the consecutive symbolic variables used. The matrix has
     as columns the following labels in this specific order:
@@ -36,6 +24,3 @@ def generate_robot_kinematics():
                     [.1385,     q7,   0,       0,      0]])     #7
     
     return Robot, q
-
-if __name__ == "__main__":
-    Robot, q = generate_robot_kinematics()

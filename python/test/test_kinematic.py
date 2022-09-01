@@ -1,7 +1,9 @@
 import numpy as np
 import unittest
-from kinematic import dkin, geometric_jacobian
-from dhc import generate_robot
+from rman.kinematics.direct import dkin
+from rman.kinematics.differential import geometric_jacobian
+from rman.dhc import generate_robot
+
 class TestKinematic(unittest.TestCase):
     def table_test(self):
         from math import pi
@@ -34,9 +36,9 @@ Real: {element_real}
         Robot, q, a = self.table_test()
         T_test = dkin(Robot)
         T_real = sympify(Matrix([[cos(q[0])*cos(q[1]),  sin(q[0]), cos(q[0])*sin(q[1]), q[2]*cos(q[0])*sin(q[1]) + a[1]*cos(q[0])*cos(q[1])],
-                                  [sin(q[0])*cos(q[1]), -cos(q[0]), sin(q[0])*sin(q[1]), q[2]*sin(q[0])*sin(q[1]) + a[1]*sin(q[0])*cos(q[1])],
-                                  [          sin(q[1]),          0,          -cos(q[1]),                     a[1]*sin(q[1]) - q[2]*cos(q[1])],
-                                  [                  0,          0,                   0,                                                   1]]))
+                                 [sin(q[0])*cos(q[1]), -cos(q[0]), sin(q[0])*sin(q[1]), q[2]*sin(q[0])*sin(q[1]) + a[1]*sin(q[0])*cos(q[1])],
+                                 [          sin(q[1]),          0,          -cos(q[1]),                     a[1]*sin(q[1]) - q[2]*cos(q[1])],
+                                 [                  0,          0,                   0,                                                   1]]))
         self.assertEqual(
             T_test,
             T_real,

@@ -2,7 +2,6 @@ import sympy as sp
 import symengine as se
 from sympy import cos, sin
 
-
 # d v a alpha o
 def dkin(Robot: sp.Matrix) -> sp.Matrix:
     """The Direct Kinematics function in which

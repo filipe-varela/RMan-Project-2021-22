@@ -2,8 +2,8 @@
 # computing
 
 from sympy import *
-from dhc import generate_robot
-from kinematic import dkin
+from rman.dhc import generate_robot
+from rman.kinematics.direct import dkin
 
 """
 The goal on this main script is to, given an 
