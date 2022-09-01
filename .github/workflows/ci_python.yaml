@@ -27,6 +27,7 @@ jobs:
         python -m pip install --upgrade wheel
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
+        python -m pip install .
       # uses: py-actions/py-dependency-install@v3
     
     - name: Run unittests in kinematics
