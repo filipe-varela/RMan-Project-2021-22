@@ -32,6 +32,6 @@ jobs:
     - name: Run unittests in kinematics
       run: |
         cd python && tree .
-        python -m tests.test_kinematic -v
+        python -m unittest discover -v
 
     # Adding a step where the project is tested
